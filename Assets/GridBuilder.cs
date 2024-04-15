@@ -1,0 +1,30 @@
+﻿using JetBrains.Annotations;
+using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine;
+
+public class GridBuilder
+{
+    public Board CreateBoard(int size)
+    {
+        Board board = new Board();
+        NodeUtility.BroadSearch<Vector3Int>(size, Vector3Int.zero, (v) => v.GetNodeNeighbourIndexes(), null, (v, i) => board.Add(v, CreateNode(v)));
+
+        foreach(var node in board)
+        {
+            Vector3Int[] neightoubrIndexes = node.Key.GetNodeNeighbourIndexes();
+            List<NodeData> neighbourList = neightoubrIndexes.Where(index => board.ContainsKey(index) && board[index].Walkable).Select(index => board[index]).ToList();
+            node.Value.SetNeighbours(neighbourList);
+        }
+
+        return board;
+    }
+
+    private NodeData CreateNode(Vector3Int index)
+    {
+        bool walkable = index != Vector3Int.zero && Random.value > 0.15f;
+        return new NodeData(index, walkable);
+    }
+}
