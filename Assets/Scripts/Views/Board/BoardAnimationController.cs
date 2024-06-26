@@ -46,8 +46,8 @@ namespace Hex.Views
             }
 
             raycaster.enabled = false;
-            float cameraSize = CameraUtility.CalculateOrtho(1f);
-            Camera.main.DOOrthoSize(cameraSize, 0.7f).SetEase(Ease.InQuad);
+            //float cameraSize = CameraUtility.CalculateOrtho(1f);
+            //Camera.main.DOOrthoSize(cameraSize, 0.7f).SetEase(Ease.InQuad);
 
             yield return new WaitForSeconds(0.25f);
 
@@ -76,7 +76,7 @@ namespace Hex.Views
 
             float maxX = (nodes.Values.Max(v => v.transform.position.x) + 1) * 2;
             float maxY = (nodes.Values.Max(v => v.transform.position.y) + 1) * 2;
-            cameraSize = CameraUtility.CalculateOrtho(new Vector2(maxX, maxY));
+            var cameraSize = CameraUtility.CalculateOrtho(new Vector2(maxX, maxY));
             Camera.main.DOOrthoSize(cameraSize, 0.8f);
 
             yield return new WaitForSeconds(0.7f);

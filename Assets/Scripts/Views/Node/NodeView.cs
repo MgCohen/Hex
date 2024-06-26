@@ -22,6 +22,8 @@ namespace Hex.Views
         {
             this.onClick = onClick;
 
+            transform.position = new Vector3();
+
             //set values
             Data = data;
             Index = data.Index;
